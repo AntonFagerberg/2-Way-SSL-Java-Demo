@@ -8,6 +8,7 @@ public class User implements Serializable {
         DOCTOR = 2,
         GOVERNMENT = 3;
 
+    private int division = -1;
     private int userType;
     private String username;
     private byte[]
@@ -15,6 +16,11 @@ public class User implements Serializable {
         password;
 
     protected User(String username, char[] password, int userType) {
+        if (username == "") {
+            System.err.println("[USER] Username can't be blank.");
+            System.exit(1);
+        }
+
         switch(userType) {
             case PATIENT:
             case NURSE:
@@ -50,5 +56,9 @@ public class User implements Serializable {
 
     protected String username() {
         return username;
+    }
+
+    protected int division() {
+        return (isNurse() || isDoctor()) ? division : -1;
     }
 }
