@@ -22,10 +22,10 @@ public class Log {
     }
 
     protected void writeEvent(int eventId) {
-        writeEvent(eventId, "SYSTEM");
+        writeEvent(eventId, -1, "SYSTEM");
     }
 
-    protected void writeEvent(int eventId, String username) {
+    protected void writeEvent(int eventId, int itemId, String username) {
         try {
             String message = "";
             switch (eventId) {
@@ -43,7 +43,14 @@ public class Log {
                     System.exit(1);
                     break;
             }
-            writer.write("[" + System.currentTimeMillis() + "][" + username + "] " + message);
+
+            if (itemId >= 0) {
+                message = "[" + itemId + "] " + message;
+            } else {
+                message = " " + message;
+            }
+
+            writer.write("[" + System.currentTimeMillis() + "][" + username + "]" + message);
             writer.newLine();
             writer.flush();
         } catch (IOException e) {

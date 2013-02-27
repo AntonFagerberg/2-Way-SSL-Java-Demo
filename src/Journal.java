@@ -10,8 +10,10 @@ public class Journal implements Serializable {
         doctor = "",
         nurse = "";
 
-    protected Journal(String patient) {
+    protected Journal(String patient, User doctor, String nurse) {
         this.patient = patient;
+        this.nurse = nurse;
+        this.doctor = doctor.username();
     }
 
     protected String patient() {
@@ -28,5 +30,9 @@ public class Journal implements Serializable {
 
     protected String nurse() {
         return nurse;
+    }
+
+    protected String data() {
+        return "Journal data [" + this.hashCode() + "].";
     }
 }
