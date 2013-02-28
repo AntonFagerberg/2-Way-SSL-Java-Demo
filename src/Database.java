@@ -7,6 +7,7 @@ public class Database implements Serializable {
     private HashMap<String, Journal> journals = new HashMap<String, Journal>();
 
     protected Database() {
+        journals.put("test", new Journal("test", new User("bob_kelso", User.DOCTOR), "carla"));
     }
 
     protected boolean usernameExists(String username) {
@@ -22,10 +23,11 @@ public class Database implements Serializable {
         }
     }
 
-    protected Journal requestJournal(User user, String patientName) {
+    protected Journal requestJournal(String username, String patientName) {
         Journal journal = journals.get(patientName);
+        User user = users.get(username);
 
-        if (journal != null && (
+        if (user != null && journal != null && (
             (user.username() == patientName) ||
             (user.isNurse() && (journal.nurse() == user.username() || user.division() == journal.division() && journal.division() >= 0)) ||
             (user.isDoctor() && (user.username() == journal.doctor() || (user.division() == journal.division() && journal.division() >= 0))) ||

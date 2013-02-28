@@ -11,11 +11,8 @@ public class User implements Serializable {
     private int division = -1;
     private int userType;
     private String username;
-    private byte[]
-        salt = PasswordProtector.generateSalt(),
-        password;
 
-    protected User(String username, char[] password, int userType) {
+    protected User(String username, int userType) {
         if (username == "") {
             System.err.println("[USER] Username can't be blank.");
             System.exit(1);
@@ -35,7 +32,6 @@ public class User implements Serializable {
         }
 
         this.username = username;
-        this.password = PasswordProtector.encryptPassword(password, salt);
     }
 
     protected boolean isPatient() {
