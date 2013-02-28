@@ -33,8 +33,8 @@ public class Server extends Communicator {
             try {
                 SSLSocket sslSocket = (SSLSocket) sslServerSocket.accept();
                 sslSocket.setNeedClientAuth(true);
-                SSLSession sslSession = (SSLSession) sslSocket.getSession();
-                X509Certificate x509Certificate = (X509Certificate) sslSession.getPeerCertificateChain()[0];
+                SSLSession sslSession = sslSocket.getSession();
+                X509Certificate x509Certificate = sslSession.getPeerCertificateChain()[0];
                 String username = x509Certificate.getSubjectDN().getName().split("CN=")[1].split(",")[0];
 
                 inputStream = sslSocket.getInputStream();
@@ -67,6 +67,8 @@ public class Server extends Communicator {
                                 break;
                         }
                     } catch (NumberFormatException e) {
+                        send("Invalid command.", outputStream);
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         send("Invalid command.", outputStream);
                     }
                 }
