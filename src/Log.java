@@ -1,13 +1,10 @@
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Log {
     FileWriter logFile;
     BufferedWriter writer;
-
-    protected final static int
-        SYSTEM_START = 0,
-        SYSTEM_END = 1,
-        DATABASE_UPSTART_ERROR = 2;
 
     protected Log() {
         try {
@@ -18,39 +15,23 @@ public class Log {
             System.exit(1);
         }
 
-        writeEvent(SYSTEM_START);
+        writeEvent("System started.");
     }
 
-    protected void writeEvent(int eventId) {
-        writeEvent(eventId, -1, "SYSTEM");
-    }
-
-    protected void writeEvent(int eventId, int itemId, String username) {
+    protected void writeJournalAccess(String user, String patient, String action, Boolean allowed) {
         try {
-            String message = "";
-            switch (eventId) {
-                case SYSTEM_START:
-                    message = "Logger started.";
-                    break;
-                case SYSTEM_END:
-                    message = "Logger closed.";
-                    break;
-                case DATABASE_UPSTART_ERROR:
-                    message = "Database couldn't be started.";
-                    break;
-                default:
-                    System.err.println("[LOGGER] Illegal eventID in writeEvent: " + eventId + ".");
-                    System.exit(1);
-                    break;
-            }
+            writer.write("[" + System.currentTimeMillis() + "] User \"" + user + "\" requested to \"" + action + "\" the journal for patient \"" + patient + "\". Allowed: " + allowed + ".");
+            writer.newLine();
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println("[LOGGER] Unable to write to log-file.");
+            System.exit(1);
+        }
+    }
 
-            if (itemId >= 0) {
-                message = "[" + itemId + "] " + message;
-            } else {
-                message = " " + message;
-            }
-
-            writer.write("[" + System.currentTimeMillis() + "][" + username + "]" + message);
+    protected void writeEvent(String message) {
+        try {
+            writer.write("[" + System.currentTimeMillis() + "] " + message);
             writer.newLine();
             writer.flush();
         } catch (IOException e) {

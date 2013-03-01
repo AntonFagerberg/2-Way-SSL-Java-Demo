@@ -1,23 +1,24 @@
 import java.io.Serializable;
-import java.util.HashSet;
 
 public class Journal implements Serializable {
     private static final long serialVersionUID = 200;
-    private HashSet<String> accessList = new HashSet<String>();
-    private final String patient;
     private int division = -1;
+    private final String patient;
     private String
-        doctor = "",
-        nurse = "";
+        doctor,
+        nurse,
+        data;
 
-    protected Journal(String patient, User doctor, String nurse) {
+    protected Journal(String data, String patient, String doctor, String nurse, int division) {
+        this.data = data;
         this.patient = patient;
         this.nurse = nurse;
-        this.doctor = doctor.username();
+        this.doctor = doctor;
+        this.division = division;
     }
 
     protected String patient() {
-        return patient();
+        return patient;
     }
 
     protected int division() {
@@ -33,6 +34,6 @@ public class Journal implements Serializable {
     }
 
     protected String data() {
-        return "Journal data [" + this.hashCode() + "].";
+        return data;
     }
 }

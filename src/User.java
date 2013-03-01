@@ -8,11 +8,15 @@ public class User implements Serializable {
         DOCTOR = 2,
         GOVERNMENT = 3;
 
-    private int division = -1;
-    private int userType;
     private String username;
+    private int division,
+        userType;
 
     protected User(String username, int userType) {
+        this(username, userType, -1);
+    }
+
+    protected User(String username, int userType, int division) {
         if (username == "") {
             System.err.println("[USER] Username can't be blank.");
             System.exit(1);
@@ -32,6 +36,7 @@ public class User implements Serializable {
         }
 
         this.username = username;
+        this.division = division;
     }
 
     protected boolean isPatient() {

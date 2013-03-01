@@ -1,14 +1,71 @@
-[1362068919474][SYSTEM] Logger started.
-[1362068935724][SYSTEM] Logger started.
-[1362084111455][SYSTEM] Logger started.
-[1362084130476][SYSTEM] Logger started.
-[1362084308946][SYSTEM] Logger started.
-[1362084369504][SYSTEM] Logger started.
-[1362084450930][SYSTEM] Logger started.
-[1362084617842][SYSTEM] Logger started.
-[1362085350185][SYSTEM] Logger started.
-[1362085358570][SYSTEM] Logger started.
-[1362085363218][SYSTEM] Logger started.
-[1362085408609][SYSTEM] Logger started.
-[1362085518586][SYSTEM] Logger started.
-[1362085684120][SYSTEM] Logger started.
+[1362148042355] System started.
+[1362148164081] System started.
+[1362148175229] User "BobKelso" signed off.
+[1362148267014] System started.
+[1362148286165] User "BobKelso" signed off.
+[1362148301730] User "BobKelso" requested to "read" the journal for patient "hej". Allowed: false.
+[1362148303970] User "BobKelso" signed off.
+[1362148344186] User "BobKelso" requested to "read" the journal for patient "hej". Allowed: false.
+[1362148347412] User "BobKelso" signed off.
+[1362148364300] User "DrCox" signed off.
+[1362148429689] System started.
+[1362148443243] User "DrCox" signed off.
+[1362148450915] User "DrCox" signed off.
+[1362148458754] User "DrCox" requested to "read" the journal for patient "hej". Allowed: false.
+[1362148522314] System started.
+[1362148531945] User "BobKelso" requested to "read" the journal for patient "hej". Allowed: false.
+[1362148533506] User "BobKelso" signed off.
+[1362148555145] User "BobKelso" signed off.
+[1362148566330] User "BobKelso" requested to "read" the journal for patient "hej". Allowed: false.
+[1362148566969] User "BobKelso" signed off.
+[1362148721394] System started.
+[1362148734725] User "DrCox" signed off.
+[1362148742253] User "DrCox" signed off.
+[1362148922622] User "BobKelso" signed off.
+[1362149052324] User "Buck" signed off.
+[1362149058254] User "Buck" signed off.
+[1362149274763] User "BobKelso" signed off.
+[1362149285676] User "BobKelso" signed off.
+[1362149386707] User "DrCox" signed off.
+[1362149400779] User "DrCox" signed off.
+[1362149417962] User "BobKelso" signed off.
+[1362149429571] User "DrCox" signed off.
+[1362149656205] System started.
+[1362149698852] User "BobKelso" requested to "write" the journal for patient "Steve". Allowed: true.
+[1362149785644] System started.
+[1362149808820] User "BobKelso" requested to "write" the journal for patient "Steve". Allowed: true.
+[1362149814233] User "BobKelso" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362149816848] User "BobKelso" signed off.
+[1362149844167] User "Carla" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362149846129] User "Carla" signed off.
+[1362149860384] User "DrCox" requested to "read" the journal for patient "Steve". Allowed: false.
+[1362149867813] User "DrCox" signed off.
+[1362149935509] User "Buck" requested to "read" the journal for patient "Steve". Allowed: false.
+[1362149938062] User "Buck" signed off.
+[1362150016229] User "Steve" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362150475873] User "DrCox" requested to "write" the journal for patient "Steve". Allowed: true.
+[1362150486122] User "DrCox" requested to "read" the journal for patient "steve". Allowed: false.
+[1362150498064] User "DrCox" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362150512144] User "BobKelso" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362150527464] User "Carla" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362150562575] User "Laverne" requested to "read" the journal for patient "Steve". Allowed: false.
+[1362150563815] User "Laverne" signed off.
+[1362150573823] User "Steve" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362150587599] User "Buck" requested to "read" the journal for patient "Steve". Allowed: false.
+[1362150598944] User "Obama" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362172444478] System started.
+[1362172471326] User "BobKelso" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362172475829] User "BobKelso" requested to "read" the journal for patient "Buck". Allowed: false.
+[1362172506001] System started.
+[1362172546773] User "BobKelso" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362172578494] System started.
+[1362172593813] User "BobKelso" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362172598126] User "BobKelso" requested to "read" the journal for patient "Buck". Allowed: false.
+[1362172601070] User "BobKelso" requested to "delete" the journal for patient "Steve". Allowed: false.
+[1362172615622] User "BobKelso" signed off.
+[1362172632060] User "Obama" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362172634453] User "Obama" requested to "read" the journal for patient "Buck". Allowed: false.
+[1362172673101] User "Obama" requested to "write" the journal for patient "Steve". Allowed: true.
+[1362172679749] User "Obama" requested to "read" the journal for patient "Steve". Allowed: true.
+[1362172689786] User "Obama" requested to "delete" the journal for patient "Steve". Allowed: true.
+[1362172692881] User "Obama" requested to "read" the journal for patient "Steve". Allowed: false.

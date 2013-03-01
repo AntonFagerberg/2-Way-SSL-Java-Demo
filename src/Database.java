@@ -3,34 +3,27 @@ import java.util.HashMap;
 
 public class Database implements Serializable {
     private static final long serialVersionUID = 100;
-    private HashMap<String, User> users = new HashMap();
+    private HashMap<String, User> users = new HashMap<String, User>();
     private HashMap<String, Journal> journals = new HashMap<String, Journal>();
 
     protected Database() {
-        journals.put("test", new Journal("test", new User("bob_kelso", User.DOCTOR), "carla"));
     }
 
-    protected boolean usernameExists(String username) {
-        return users.containsKey(username);
+    protected User getUser(String username) {
+        return users.get(username);
     }
 
-    protected boolean addUser(User user) {
-        if (usernameExists(user.username())) {
-            return false;
-        } else {
-            users.put(user.username(), user);
-            return false;
-        }
+    protected void addUser(User user) {
+        users.put(user.username(), user);
     }
 
-    protected Journal requestJournal(String username, String patientName) {
+    protected Journal requestJournal(User user, String patientName) {
         Journal journal = journals.get(patientName);
-        User user = users.get(username);
 
-        if (user != null && journal != null && (
-            (user.username() == patientName) ||
-            (user.isNurse() && (journal.nurse() == user.username() || user.division() == journal.division() && journal.division() >= 0)) ||
-            (user.isDoctor() && (user.username() == journal.doctor() || (user.division() == journal.division() && journal.division() >= 0))) ||
+        if (journal != null && (
+            (user.username().equals(patientName)) ||
+            (user.isNurse() && (journal.nurse().equals(user.username()) || user.division() == journal.division() && journal.division() >= 0)) ||
+            (user.isDoctor() && (user.username().equals(journal.doctor()) || (user.division() == journal.division() && journal.division() >= 0))) ||
             (user.isGovernment())
             )
         ) {
@@ -42,8 +35,9 @@ public class Database implements Serializable {
 
     protected boolean writeJournal(User user, Journal journal) {
         if (
+            journals.containsKey(journal.patient()) ||
             (user.isNurse() && user.division() == journal.division() && journal.division() >= 0) ||
-            (user.isDoctor() && (user.username() == journal.doctor() || (user.division() == journal.division() && journal.division() >= 0)))
+            (user.isDoctor() && (user.username().equals(journal.doctor()) || (user.division() == journal.division() && journal.division() >= 0)))
         ) {
             journals.put(journal.patient(), journal);
             return true;
@@ -54,10 +48,6 @@ public class Database implements Serializable {
 
     protected boolean deleteJournal(User user, String patientName) {
         Journal journal = journals.get(patientName);
-        if (journal != null && user.isGovernment()) {
-            return journals.remove(patientName) != null;
-        } else {
-            return false;
-        }
+        return journal != null && user.isGovernment() && journals.remove(patientName) != null;
     }
 }

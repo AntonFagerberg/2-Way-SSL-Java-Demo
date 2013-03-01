@@ -16,6 +16,16 @@ public class Server extends Communicator {
 
         Database database = loadDatabase();
 
+//        Database database = new Database();
+//        database.addUser(new User("BobKelso", User.DOCTOR, 1));
+//        database.addUser(new User("Carla", User.NURSE, 1));
+//        database.addUser(new User("DrCox", User.DOCTOR, 2));
+//        database.addUser(new User("Laverne", User.NURSE, 2));
+//        database.addUser(new User("Steve", User.PATIENT));
+//        database.addUser(new User("Buck", User.PATIENT));
+//        database.addUser(new User("Obama", User.GOVERNMENT));
+//        saveDatabase(database);
+
         InputStream inputStream;
         OutputStream outputStream;
 
@@ -40,11 +50,14 @@ public class Server extends Communicator {
                 inputStream = sslSocket.getInputStream();
                 outputStream = sslSocket.getOutputStream();
 
-                if (database.usernameExists(username)) {
-                    send("Welcome " + username + ", you are authenticated!", outputStream);
+                User user = database.getUser(username);
+
+                if (user != null) {
+                    send("Welcome " + user.username() + ", you are authenticated!", outputStream);
                 } else {
                     send("Username is not valid. Connection will be closed.", outputStream);
                     sslSocket.close();
+                    sslSession.invalidate();
                 }
 
                 String[] message;
@@ -54,12 +67,38 @@ public class Server extends Communicator {
                     message = receive(inputStream).split(" ");
                     try {
                         switch (Integer.parseInt(message[0])) {
+                            case 0:
+                                send("Connection terminated.", outputStream);
+                                log.writeEvent("User \"" + username + "\" signed off.");
+                                sslSession.invalidate();
+                                sslSocket.close();
+                                break;
                             case 1:
-                                Journal journal = database.requestJournal(username, message[1]);
+                                Journal journal = database.requestJournal(user, message[1]);
                                 if (journal != null) {
-                                    send(journal.data(), outputStream);
+                                    log.writeJournalAccess(user.username(), message[1], "read", true);
+                                    send("Journal data: " + journal.data(), outputStream);
                                 } else {
+                                    log.writeJournalAccess(user.username(), message[1], "read", false);
                                     send("Unable to get journal.", outputStream);
+                                }
+                                break;
+                            case 2:
+                                if (database.writeJournal(user, new Journal(message[1], message[2], message[3], message[4], Integer.parseInt(message[5])))) {
+                                    log.writeJournalAccess(user.username(), message[2], "write", true);
+                                    send("Journal created.", outputStream);
+                                } else {
+                                    log.writeJournalAccess(user.username(), message[2], "write", true);
+                                    send("Journal not created.", outputStream);
+                                }
+                                break;
+                            case 3:
+                                if (database.deleteJournal(user, message[1])) {
+                                    log.writeJournalAccess(user.username(), message[1], "delete", true);
+                                    send("Journal deleted.", outputStream);
+                                } else {
+                                    log.writeJournalAccess(user.username(), message[1], "delete", false);
+                                    send("Journal not deleted.", outputStream);
                                 }
                                 break;
                             default:
@@ -74,7 +113,6 @@ public class Server extends Communicator {
                 }
             } catch (IOException e) {
                 saveDatabase(database);
-                log.close();
                 System.err.println("Connection closed. Restarting.");
             }
         }
@@ -92,15 +130,15 @@ public class Server extends Communicator {
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             database = (Database) objectInputStream.readObject();
         } catch (FileNotFoundException e) {
-            log.writeEvent(Log.DATABASE_UPSTART_ERROR);
+            log.writeEvent("Unable to load database.");
             e.printStackTrace();
             System.exit(1);
         } catch (IOException e) {
-            log.writeEvent(Log.DATABASE_UPSTART_ERROR);
+            log.writeEvent("Unable to load database.");
             e.printStackTrace();
             System.exit(1);
         } catch (ClassNotFoundException e) {
-            log.writeEvent(Log.DATABASE_UPSTART_ERROR);
+            log.writeEvent("Unable to load database.");
             e.printStackTrace();
             System.exit(1);
         }
@@ -114,11 +152,11 @@ public class Server extends Communicator {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(database);
         } catch (FileNotFoundException e) {
-            log.writeEvent(Log.DATABASE_UPSTART_ERROR);
+            log.writeEvent("Unable to save database.");
             e.printStackTrace();
             System.exit(1);
         } catch (IOException e) {
-            log.writeEvent(Log.DATABASE_UPSTART_ERROR);
+            log.writeEvent("Unable to save database.");
             e.printStackTrace();
             System.exit(1);
         }
