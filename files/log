@@ -69,3 +69,5 @@
 [1362172679749] User "Obama" requested to "read" the journal for patient "Steve". Allowed: true.
 [1362172689786] User "Obama" requested to "delete" the journal for patient "Steve". Allowed: true.
 [1362172692881] User "Obama" requested to "read" the journal for patient "Steve". Allowed: false.
+[1362306024296] System started.
+[1362306038384] User "BobKelso" signed in.

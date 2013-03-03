@@ -53,8 +53,10 @@ public class Server extends Communicator {
                 User user = database.getUser(username);
 
                 if (user != null) {
+                    log.writeEvent("User \"" + user.username() + "\" signed in.");
                     send("Welcome " + user.username() + ", you are authenticated!", outputStream);
                 } else {
+                    log.writeEvent("User \"" + user.username() + "\" tried to sign in but was rejected by the ACL.");
                     send("Username is not valid. Connection will be closed.", outputStream);
                     sslSocket.close();
                     sslSession.invalidate();
